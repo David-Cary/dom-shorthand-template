@@ -1,8 +1,10 @@
 /**
  * @jest-environment jsdom
  */
- import {
-  DOMTemplateRenderer
+import {
+  DOMTemplateRenderer,
+  ContextRenderer,
+  DataRenderer
 } from '../src/dom/renderers'
 import { NodeType } from 'dom-shorthand'
 
@@ -90,7 +92,7 @@ describe("ContextRenderer", () => {
 describe("DataRenderer", () => {
   describe("renderData", () => {
     test("should generate a node from provided data", () => {
-      const renderer = new ContextRenderer({
+      const renderer = new DataRenderer({
         tag: 'p',
         content: [
           {
