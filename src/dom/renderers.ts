@@ -151,6 +151,9 @@ export class DOMTemplateRenderer {
       case 'string': {
         return source
       }
+      default: {
+        return String(source)
+      }
     }
   }
 
