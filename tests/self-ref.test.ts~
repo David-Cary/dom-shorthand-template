@@ -1,8 +1,0 @@
-/**
- * @jest-environment jsdom
- */
-import {
-  DOMTemplateRenderer,
-  ContextRenderer,
-  DataRenderer
-} from '../src/dom/renderers'

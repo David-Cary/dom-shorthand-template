@@ -3,6 +3,7 @@ import {
   type KeyValueMap,
   type KeyedValueTemplate,
   type ReplacableValue,
+  DataViewDirective,
   DEFAULT_DIRECTIVES
 } from 'keyed-value-templates'
 import {
@@ -32,7 +33,10 @@ export type DOMNodeShorthandTemplate = (
   >
 )
 
-export const DEFAULT_TEMPLATE_RESOLVER = new KeyedTemplateResolver(DEFAULT_DIRECTIVES)
+export const DEFAULT_TEMPLATE_RESOLVER = new KeyedTemplateResolver({
+  ...DEFAULT_DIRECTIVES,
+  present: new DataViewDirective()
+})
 
 /**
  * Provides utility functions for generating DOM nodes from a given template and context.

@@ -156,6 +156,60 @@ describe("Template Self References", () => {
       expect(element.innerHTML).toEqual("#1, #2")
     }
   })
+  test("should be able to use the DataViewDirective", () => {
+    const renderer = new DOMTemplateRenderer()
+    const template = {
+      tag: 'div',
+      content: [
+        {
+          $use: 'present',
+          template: {
+            $use: 'value',
+            value: {
+              $use: '+',
+              args: [
+                '#',
+                {
+                  $use: 'coalesce',
+                  args: [
+                    {
+                      $use: 'getVar',
+                      path: ['n']
+                    },
+                    '_NaN_'
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        ', ',
+        {
+          $use: 'present',
+          data: {
+            n: 1
+          },
+          template: {
+            $use: 'get',
+            path: [
+              'template',
+              'content',
+              0,
+              'template',
+              'value'
+            ]
+          }
+        }
+      ]
+    }
+    const context = { template }
+    const result = renderer.renderTemplate(template, context)
+    expect(result).toBeDefined()
+    if(result != null) {
+      const element = result as Element
+      expect(element.innerHTML).toEqual("#_NaN_, #1")
+    }
+  })
 })
 
 describe("Context Components", () => {

@@ -249,93 +249,54 @@ You may have noticed the above replication trick will give you an exact copy of 
 
 Putting it inside a "run" directive lets you set up local variables for each location.  Meanwhile, the "resolve" directive ensures the copied sub-template gets resolved instead of just being copied and used as is.
 
-If you have prebuilt templates you want to pass in as components and are willing to expose the renderer, you can do so like this:
+As of version 1.1.0, you can take advantage of the `DataViewDirective` (keyed as "present") to do this a bit more compactly, like so:
+
 ```
-    const poundTemplate = {
-      tag: 'span',
-      content: [
-        {
-          $use: '+',
-          args: [
-            '#',
-            {
-              $use: 'get',
-              path: ['value']
-            }
-          ]
-        }
-      ]
-    }
-    const renderer = new DOMTemplateRenderer()
     const template = {
       tag: 'div',
       content: [
         {
-          $use: 'get',
-          path: [
-            'renderer',
-            {
-              name: 'resolveTemplate',
+          $use: 'present',
+          template: {
+            $use: 'value',
+            value: {
+              $use: '+',
               args: [
+                '#',
                 {
-                  $use: 'get',
-                  path: ['poundTemplate']
-                },
-                {
-                  value: 1
+                  $use: 'coalesce',
+                  args: [
+                    {
+                      $use: 'getVar',
+                      path: ['n']
+                    },
+                    '_NaN_'
+                  ]
                 }
               ]
             }
-          ]
+          }
+        },
+        ', ',
+        {
+          $use: 'present',
+          data: {
+            n: 1
+          },
+          template: {
+            $use: 'get',
+            path: [
+              'template',
+              'content',
+              0,
+              'template',
+              'value'
+            ]
+          }
         }
       ]
     }
-    const context = {
-      renderer,
-      poundTemplate
-    }
-    const result = renderer.renderTemplate(template, context)
 ```
 
-Alternately, you can pass choose to wrap the components in their own renderers and pass them in like this:
-```
-    const poundComponent = new ContextRenderer({
-      tag: 'span',
-      content: [
-        {
-          $use: '+',
-          args: [
-            '#',
-            {
-              $use: 'get',
-              path: ['value']
-            }
-          ]
-        }
-      ]
-    })
-    const renderer = new DOMTemplateRenderer()
-    const template = {
-      tag: 'div',
-      content: [
-        {
-          $use: 'get',
-          path: [
-            'poundComponent',
-            {
-              name: 'resolveContextView',
-              args: [
-                {
-                  value: 1
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-    const context = { poundComponent }
-    const result = renderer.renderTemplate(template, context)
-```
+Note that the above example also shows how you can provide placeholder values using the "coalesce" directive.  Such directives use the first non-nullish value in their arguments list, so if you get the first argumnet a "getVar" directive and the second to a placeholder value that placeholder will only be used if the target variable is null or undefined.
 
-In either case note that you need to use the "resolve" methods rather than the "render" methods.  Using render methods will output a DOM node which the renderer isn't expecting when processing a template.
