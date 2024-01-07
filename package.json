@@ -1,6 +1,6 @@
 {
   "name": "dom-shorthand-templates",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Provides ability to generate DOM nodes from a JSON based template",
   "main": "lib/index.js",
   "files": [
@@ -44,6 +44,6 @@
   },
   "dependencies": {
     "dom-shorthand": "^1.0.1",
-    "keyed-value-templates": "^1.1.1"
+    "keyed-value-templates": "^1.1.2"
   }
 }
