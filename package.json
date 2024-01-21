@@ -1,6 +1,6 @@
 {
   "name": "dom-shorthand-templates",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Provides ability to generate DOM nodes from a JSON based template",
   "main": "lib/index.js",
   "files": [
@@ -11,6 +11,8 @@
     "lint-fix": "eslint --fix --ext .ts src",
     "test": "jest tests",
     "test-dom": "jest tests/dom.test.ts",
+    "test-content": "jest tests/content.test.ts",
+    "test-duplication": "jest tests/duplication.test.ts",
     "test-self-ref": "jest tests/self-ref.test.ts",
     "build": "tsc"
   },

@@ -300,17 +300,4 @@ As of version 1.1.0, you can take advantage of the `DataViewDirective` (keyed as
 
 Note that the above example also shows how you can provide placeholder values using the "coalesce" directive.  Such directives use the first non-nullish value in their arguments list, so if you get the first argumnet a "getVar" directive and the second to a placeholder value that placeholder will only be used if the target variable is null or undefined.
 
-Version 1.2.0 adds the `ContentDuplicationDirective`.  This function much like the DataViewDirective, but will clear ids attributes in the proces, ensuring this duplication doesn't result in multiple elements with the same id.  That directive uses the `source` property in place of `template`.  It also allows overwriting attribute values through the `attributes` property, should you want to assign an id to the newly created element.
-
-### Values as Text
-
-Version also 1.2.0 introduces the `ValueTextDirective` and `WrappedValueTextDirective` ditectives.  The former takes converts it's value property to text using the setting in it's options property.  The latter does much the same, save that it wraps the resulting text in an array.  Such wrapping means you can use that array as a templated elements content array.
-
-The options objects for both directives can have the following values:
-  * nullishText - Text to show when the value is null or undefined.  Normally set to an empty string when you don't want to see "undefined" and "null" strings.
-  * stringQuote - Quotation marks to wrap around string values.
-  * viaJSON - Indicates JSON stringify should be used to generate the text.
-  * replacer - Parameter to passed on to any JSON stringify calls.
-  * space - Either number of spaces or a set of characters to use for each indenting of a nested item.
-  * depth - Level of indenting to apply to the object.  This is usually only used in recursive calls.
-
+As
